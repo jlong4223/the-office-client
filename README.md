@@ -1,24 +1,11 @@
-# office-client
+# Michael Scott Quotes
 
-## Project setup
-```
-yarn install
-```
+This is a Vue3 project with authentication and protected routes based on a user. If a user is logged in, they can see a page of Michael Scott Quotes.
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+## Technologies Used:
 
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- Vue3
+- Ruby on Rails API
+- Vue3-Router
+- Yarn
+- Git
