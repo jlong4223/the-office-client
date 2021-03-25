@@ -4,7 +4,7 @@
     <div id="quoteDiv" v-for="quote in quotes" v-bind:key="quote.id">
       <p>{{ quote.quote }}</p>
       <button class="button is-danger" @click="deleteQuote(quote.id)">
-        delete
+        <i class="fas fa-trash-alt"></i>
       </button>
     </div>
   </div>
