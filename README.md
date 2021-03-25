@@ -10,3 +10,5 @@ This is a Vue3 project that uses Vue's composition API. The project includes use
 - Vue3-Router
 - Yarn
 - Git
+- Bulma (CSS framework)
+- Font Awesome
