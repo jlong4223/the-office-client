@@ -14,10 +14,13 @@ export default {
   name: "Quotes",
   setup() {
     const BASE_URL = "http://localhost:3000/offices";
+
+    /* allows for reactive data - if data here chages, so does the template */
     const quotes = ref([]);
 
     async function fetchData() {
       const response = await fetch(BASE_URL);
+      /*--- Using .value to give the quotes array the fetch data ---*/
       quotes.value = await response.json();
     }
 
@@ -27,8 +30,8 @@ export default {
         headers: {
           "content-type": "application/json",
         },
-      }),
-        fetchData();
+      });
+      fetchData();
     }
 
     onMounted(fetchData());
