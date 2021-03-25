@@ -3,13 +3,16 @@
   <div id="quote-container">
     <div id="quoteDiv" v-for="quote in quotes" v-bind:key="quote.id">
       <p>{{ quote.quote }}</p>
-      <button @click="deleteQuote(quote.id)">delete</button>
+      <button class="button is-danger" @click="deleteQuote(quote.id)">
+        delete
+      </button>
     </div>
   </div>
 </template>
 
 <script>
 import { onMounted, ref } from "vue";
+
 export default {
   name: "Quotes",
   setup() {
@@ -58,7 +61,7 @@ export default {
   padding: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   height: 190px;
 }

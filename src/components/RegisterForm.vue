@@ -9,6 +9,7 @@
 
 <script>
 export default {
+  // TODO this form will post to /users?
   setup() {},
 };
 </script>
