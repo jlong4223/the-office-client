@@ -16,46 +16,43 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { reactive } from "vue";
 export default {
   setup() {
     const BASE_URL = "http://localhost:3000/users";
-    // split the below into three sepertae and change the v-model
-    const user = ref({
+
+    /* adds reactive for ability to change values in the template */
+    const user = reactive({
       name: "",
       email: "",
       password: "",
     });
-    // const email = ref("");
 
-    // const name = ref("");
-
-    // const password = ref("");
-
-    // const user = {
-    //   name: "user",
-    //   email: "user@user.com",
-    //   password: "user",
-    // };
-
+    // TODO move below function to services
     async function registerUser(user) {
       await fetch(BASE_URL, {
         method: "post",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(user),
+        body: JSON.stringify({ user }),
       });
     }
 
     async function handleSubmit() {
       try {
         await registerUser(user);
+        // TODO figure out how to push user home
+        alert("thanks for registering")(
+          (user.name = ""),
+          (user.email = ""),
+          (user.password = "")
+        );
       } catch (err) {
         console.log(err);
       }
     }
-    return { registerUser, handleSubmit, user /*email, name, password*/ };
+    return { registerUser, handleSubmit, user };
   },
 };
 </script>
