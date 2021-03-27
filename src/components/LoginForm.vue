@@ -45,7 +45,9 @@
 
 <script>
 import { reactive } from "vue";
-import { loginUser, setToken } from "../services/TokenService";
+import { setToken } from "../services/TokenService";
+import { loginUser } from "../services/UserService";
+
 export default {
   setup() {
     const user = reactive({
