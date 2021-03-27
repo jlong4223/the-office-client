@@ -13,6 +13,7 @@
 <script>
 import { onMounted, ref } from "vue";
 import { fetchApiQuotes } from "../services/QuotesService";
+import { getToken } from "../services/TokenService";
 
 export default {
   name: "Quotes",
@@ -39,10 +40,21 @@ export default {
         method: "DELETE",
         headers: {
           "content-type": "application/json",
+          Authorization: "Bearer " + getToken(),
         },
       });
       fetchData();
     }
+
+    // async function handleDelete(){
+    //   try{
+    //     await deleteTask().then(()=>{
+    //       fetchData()
+    //     })
+    //   }catch(err){
+    //     console.log(err)
+    //   }
+    // }
 
     onMounted(fetchData());
 
