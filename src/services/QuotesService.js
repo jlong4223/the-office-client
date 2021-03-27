@@ -8,3 +8,13 @@ export function fetchApiQuotes() {
     headers: { Authorization: "Bearer " + getToken() },
   });
 }
+
+export function deleteQuote(id) {
+  fetch(BASE_URL + `/${id}`, {
+    method: "DELETE",
+    headers: {
+      "content-type": "application/json",
+      Authorization: "Bearer " + getToken(),
+    },
+  });
+}
