@@ -25,18 +25,4 @@ function getUserFromToken() {
   return token ? JSON.parse(atob(token.split(".")[1])).name : null;
 }
 
-/* ------- User Services --------- */
-
-// TODO move these to their own service file
-const BASE_URL = "http://localhost:3000/users/login";
-function loginUser(user) {
-  return fetch(BASE_URL, {
-    method: "post",
-    headers: new Headers({
-      "Content-Type": "application/json",
-    }),
-    body: JSON.stringify({ email: user.email, password: user.password }),
-  });
-}
-
-export { setToken, getToken, getUserFromToken, removeToken, loginUser };
+export { setToken, getToken, getUserFromToken, removeToken };
