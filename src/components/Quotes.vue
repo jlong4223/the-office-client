@@ -12,6 +12,7 @@
 
 <script>
 import { onMounted, ref } from "vue";
+import { fetchApiQuotes } from "../services/QuotesService";
 
 export default {
   name: "Quotes",
@@ -21,12 +22,18 @@ export default {
     /* allows for reactive data - if data here chages, so does the template */
     const quotes = ref([]);
 
+    // waiting for token to be sent to the backend
     async function fetchData() {
-      const response = await fetch(BASE_URL);
-      /*--- Using .value to give the quotes array the fetch data ---*/
-      quotes.value = await response.json();
+      try {
+        const response = await fetchApiQuotes();
+        /*--- Using .value to give the quotes array the fetch data ---*/
+        quotes.value = await response.json();
+      } catch (err) {
+        console.log(err);
+      }
     }
 
+    /* ------ TODO move to services & add auth headers------- */
     async function deleteQuote(id) {
       await fetch(BASE_URL + `/${id}`, {
         method: "DELETE",
