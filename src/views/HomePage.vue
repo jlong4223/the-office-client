@@ -8,7 +8,6 @@ import Landing from "../components/Landing";
 
 export default defineComponent({
   components: { Landing },
-
   setup() {},
 });
 </script>

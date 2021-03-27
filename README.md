@@ -12,3 +12,4 @@ This is a Vue3 project that uses Vue's composition API. The project includes use
 - Git
 - Bulma (CSS framework)
 - Font Awesome
+- JsonWebToken
