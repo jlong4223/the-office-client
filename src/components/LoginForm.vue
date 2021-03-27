@@ -1,6 +1,6 @@
 <template>
   <div id="form-holder">
-    <form>
+    <form @submit.prevent="handleSubmit">
       <legend>Login</legend>
       <fieldset>
         <div class="field">
@@ -45,15 +45,35 @@
 
 <script>
 import { reactive } from "vue";
+import { loginUser, setToken } from "../services/TokenService";
 export default {
-  // TODO define a handleSubmit function after getting Rails Route
   setup() {
     const user = reactive({
       email: "",
       password: "",
     });
 
-    return { user };
+    async function handleSubmit() {
+      try {
+        await loginUser(user)
+          .then((res) => {
+            if (res.ok) return res.json();
+            // Probably a duplicate email
+            else {
+              alert("Bad Credentials");
+              throw new Error("Bad credentials");
+            }
+          })
+          .then(({ auth_token }) => setToken(auth_token)),
+          (user.name = ""),
+          (user.email = ""),
+          (user.password = "");
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    return { user, handleSubmit };
   },
 };
 </script>
