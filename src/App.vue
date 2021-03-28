@@ -2,17 +2,43 @@
   <div id="navbar">
     <router-link to="/">Home</router-link> |
     <router-link to="/quotes">Quotes</router-link> |
-    <router-link to="/login">Login</router-link> |
-    <router-link to="/register">Register</router-link>
+    <router-link to="/login" set-user="setUser">Login</router-link> |
+    <router-link to="/register">Register</router-link> |
+    <router-link to="" @click="handleLogout">Logout</router-link> |
+    <!-- TODO only show user if there is one -->
+    <router-link to="">Hi, {{ user.name }}</router-link>
   </div>
   <router-view />
 </template>
 
 <script>
+import { logout } from "./services/UserService";
+import { getUserFromToken } from "./services/TokenService";
+import { onMounted, reactive } from "vue";
+
 export default {
   name: "App",
   components: {},
-  setup() {},
+  setup() {
+    const user = reactive({
+      name: "",
+    });
+
+    // TODO pass setUser to the loginForm
+    async function setUser() {
+      const response = await getUserFromToken();
+      user.name = response;
+    }
+
+    function handleLogout() {
+      logout();
+      setUser();
+    }
+
+    onMounted(setUser());
+
+    return { handleLogout, user, setUser };
+  },
 };
 </script>
 
