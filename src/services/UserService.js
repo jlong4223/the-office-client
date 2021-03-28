@@ -1,3 +1,5 @@
+import { removeToken } from "./TokenService";
+
 /* ------- User Services --------- */
 const BASE_URL = "http://localhost:3000/users/login";
 
@@ -11,4 +13,8 @@ function loginUser(user) {
   });
 }
 
-export { loginUser };
+function logout() {
+  return removeToken();
+}
+
+export { loginUser, logout };
