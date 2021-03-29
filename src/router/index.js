@@ -12,7 +12,7 @@ const routes = [
     component: HomePage,
   },
   {
-    path: "/login",
+    path: "/login/:setUser",
     name: "LoginPage",
     component: LoginPage,
   },
