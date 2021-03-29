@@ -1,13 +1,23 @@
 <template>
-  <div id="navbar">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/quotes">Quotes</router-link> |
-    <router-link to="/login" set-user="setUser">Login</router-link> |
-    <router-link to="/register">Register</router-link> |
-    <router-link to="" @click="handleLogout">Logout</router-link> |
-    <!-- TODO only show user if there is one -->
+  <div id="navbar" v-if="user.name === null">
+    <router-link to="/">Home </router-link>
+    <router-link
+      :to="{ name: 'LoginPage', params: { setUser: setUser } }"
+      setUser="setUser"
+      >| Login |</router-link
+    >
+    <router-link to="/register">
+      Register
+    </router-link>
+  </div>
+
+  <div id="navbar" v-if="user.name !== null">
+    <router-link to="/">Home </router-link>
+    <router-link to="/quotes">| Quotes </router-link>
+    <router-link to="" @click="handleLogout">| Logout | </router-link>
     <router-link to="">Hi, {{ user.name }}</router-link>
   </div>
+
   <router-view />
 </template>
 
