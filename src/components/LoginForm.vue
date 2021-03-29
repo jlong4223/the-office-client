@@ -40,6 +40,9 @@
         <button class="button is-primary is-fullwidth">Submit</button>
       </fieldset>
     </form>
+    <button @click="goHome" class="button is-secondary">
+      Cancel
+    </button>
   </div>
 </template>
 
@@ -47,6 +50,7 @@
 import { reactive } from "vue";
 import { setToken } from "../services/TokenService";
 import { loginUser } from "../services/UserService";
+import router from "@/router";
 
 export default {
   setup() {
@@ -66,7 +70,8 @@ export default {
               throw new Error("Bad credentials");
             }
           })
-          .then(({ auth_token }) => setToken(auth_token)),
+          .then(({ auth_token }) => setToken(auth_token))
+          .then(() => seeQuotes()),
           (user.name = ""),
           (user.email = ""),
           (user.password = "");
@@ -75,7 +80,16 @@ export default {
       }
     }
 
-    return { user, handleSubmit };
+    const seeQuotes = () => {
+      router.push({ name: "QuotesPage" });
+    };
+
+    function goHome() {
+      console.log("going home...");
+      router.push({ name: "HomePage" });
+    }
+
+    return { user, handleSubmit, goHome };
   },
 };
 </script>
