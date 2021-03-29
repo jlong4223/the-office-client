@@ -9,7 +9,11 @@ import LoginForm from "../components/LoginForm";
 
 export default defineComponent({
   components: { LoginForm },
-  setup() {},
+  setup(props, context) {
+    context.attrs;
+    context.route;
+    return { context };
+  },
 });
 </script>
 
