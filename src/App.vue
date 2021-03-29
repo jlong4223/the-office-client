@@ -25,6 +25,7 @@
 import { logout } from "./services/UserService";
 import { getUserFromToken } from "./services/TokenService";
 import { onMounted, reactive } from "vue";
+import router from "@/router";
 
 export default {
   name: "App",
@@ -42,7 +43,13 @@ export default {
 
     function handleLogout() {
       logout();
-      setUser();
+      setUser().then(() => goHome());
+    }
+
+    // TODO why does it go home and then back to page that I was on?
+    function goHome() {
+      console.log("going home...");
+      router.replace({ name: "HomePage" });
     }
 
     onMounted(setUser());
