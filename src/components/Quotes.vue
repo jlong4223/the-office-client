@@ -14,6 +14,7 @@
 import { onMounted, ref } from "vue";
 import { fetchApiQuotes } from "../services/QuotesService";
 import { getToken } from "../services/TokenService";
+// import { deleteQuote } from "../services/QuotesService";
 
 export default {
   name: "Quotes",
@@ -46,13 +47,12 @@ export default {
       fetchData();
     }
 
-    // async function handleDelete(){
-    //   try{
-    //     await deleteTask().then(()=>{
-    //       fetchData()
-    //     })
-    //   }catch(err){
-    //     console.log(err)
+    // async function deleteTask() {
+    //   try {
+    //     await deleteQuote();
+    //     fetchData();
+    //   } catch (err) {
+    //     console.log(err);
     //   }
     // }
 
