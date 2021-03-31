@@ -1,21 +1,28 @@
 <template>
-  <div id="navbar" v-if="user.name === null">
-    <router-link to="/">Home </router-link>
-    <router-link
-      :to="{ name: 'LoginPage', params: { setUser: setUser } }"
-      setUser="setUser"
-      >| Login |</router-link
-    >
-    <router-link to="/register">
-      Register
-    </router-link>
-  </div>
+  <!-- <div id="app"></div> -->
+  <div>
+    <div id="navbar" v-if="user.name === null">
+      <router-link to="/" @click="getUserFromToken">Home &nbsp;</router-link>
+      <router-link
+        :to="{ name: 'LoginPage', params: { setUser: setUser } }"
+        setUser="setUser"
+        >| Login |</router-link
+      >
+      <router-link to="/register">
+        &nbsp; Register &nbsp;
+      </router-link>
+      <p @click="toggleNewPage">| Test</p>
+    </div>
 
-  <div id="navbar" v-if="user.name !== null">
-    <router-link to="/">Home </router-link>
-    <router-link to="/quotes">| Quotes </router-link>
-    <router-link to="" @click="handleLogout">| Logout | </router-link>
-    <router-link to="">Hi, {{ user.name }}</router-link>
+    <div id="navbar" v-if="user.name !== null">
+      <router-link to="/">Home </router-link>
+      <router-link to="/quotes">| Quotes </router-link>
+      <router-link to="" @click="handleLogout">| Logout | </router-link>
+      <router-link to="">Hi, {{ user.name }}</router-link>
+    </div>
+  </div>
+  <div v-if="page.newPage === true">
+    <LoginForm />
   </div>
 
   <router-view />
@@ -26,16 +33,17 @@ import { logout } from "./services/UserService";
 import { getUserFromToken } from "./services/TokenService";
 import { onMounted, reactive } from "vue";
 import router from "@/router";
+import LoginForm from "./components/LoginForm";
 
 export default {
   name: "App",
-  components: {},
+  components: { LoginForm },
   setup() {
     const user = reactive({
       name: "",
     });
 
-    // TODO pass setUser to the loginForm
+    // TODO pass setUser to the loginForm and set the newPage reactive to false after login
     async function setUser() {
       const response = await getUserFromToken();
       user.name = response;
@@ -54,7 +62,16 @@ export default {
 
     onMounted(setUser());
 
-    return { handleLogout, user, setUser };
+    // ======================
+    const page = reactive({
+      newPage: false,
+    });
+
+    const toggleNewPage = function() {
+      page.newPage = !page.newPage;
+    };
+
+    return { handleLogout, user, setUser, toggleNewPage, page };
   },
 };
 </script>
@@ -69,5 +86,10 @@ export default {
   margin-top: 60px;
   /* display: flex;
   flex-direction: column; */
+}
+
+#navbar {
+  display: flex;
+  justify-content: center;
 }
 </style>
