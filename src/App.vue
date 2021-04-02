@@ -15,14 +15,14 @@
     </div>
 
     <div id="navbar" v-if="user.name !== null">
-      <router-link to="/">Home </router-link>
-      <router-link to="/quotes">| Quotes </router-link>
+      <router-link to="/">Home &nbsp;</router-link>
+      <router-link to="/quotes">| Quotes &nbsp;</router-link>
       <router-link to="" @click="handleLogout">| Logout | </router-link>
-      <router-link to="">Hi, {{ user.name }}</router-link>
+      <router-link to="">&nbsp; Hi, {{ user.name }}</router-link>
     </div>
   </div>
   <div v-if="page.newPage === true">
-    <LoginForm />
+    <LoginForm :setUser="setUser" :toggleNewPage="toggleNewPage" />
   </div>
 
   <router-view />
@@ -43,7 +43,6 @@ export default {
       name: "",
     });
 
-    // TODO pass setUser to the loginForm and set the newPage reactive to false after login
     async function setUser() {
       const response = await getUserFromToken();
       user.name = response;
@@ -51,7 +50,8 @@ export default {
 
     function handleLogout() {
       logout();
-      setUser().then(() => goHome());
+      setUser();
+      goHome();
     }
 
     // TODO why does it go home and then back to page that I was on?
