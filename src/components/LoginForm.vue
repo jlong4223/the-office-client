@@ -53,12 +53,15 @@ import { loginUser } from "../services/UserService";
 import router from "@/router";
 
 export default {
-  setup() {
+  props: {
+    setUser: Function,
+    toggleNewPage: Function,
+  },
+  setup(props) {
     const user = reactive({
       email: "",
       password: "",
     });
-
     async function handleSubmit() {
       try {
         await loginUser(user)
@@ -71,6 +74,9 @@ export default {
             }
           })
           .then(({ auth_token }) => setToken(auth_token))
+          .then(() => props.setUser())
+          .then(() => props.toggleNewPage())
+          .then(() => props)
           .then(() => seeQuotes()),
           (user.name = ""),
           (user.email = ""),
