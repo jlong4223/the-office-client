@@ -22,7 +22,6 @@
       <router-link to="/" @click.prevent="getUserFromToken"
         >Home &nbsp;</router-link
       >
-      <router-link to="/quotes">| Quotes &nbsp;</router-link>
       <router-link to="" @click.prevent="handleLogout">| Logout | </router-link>
       <router-link to="">&nbsp; Hi, {{ user.name }}</router-link>
     </div>
