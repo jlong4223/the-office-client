@@ -23,21 +23,21 @@ export default {
 </script>
 
 <style scoped>
-div {
-  display: flex;
+/* div {
+  display: flex; 
   height: 80vh;
   justify-content: space-between;
   align-items: center;
-}
+} */
 
-img:hover {
+/* img:hover {
   transform: scale(1.2, 1.2);
-}
+} */
 
-#swanson {
+/* #swanson {
   width: 630px;
 }
 #scott {
   margin-left: 150px;
-}
+} */
 </style>
