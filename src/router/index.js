@@ -12,9 +12,10 @@ const routes = [
     component: HomePage,
   },
   {
-    path: "/login/:setUser",
+    path: "/login",
     name: "LoginPage",
     component: LoginPage,
+    props: true,
   },
   {
     path: "/register",
