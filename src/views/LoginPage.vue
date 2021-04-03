@@ -1,6 +1,6 @@
 <template>
   <h1>Login Page</h1>
-  <LoginForm />
+  <LoginForm :setUser="setUser" />
 </template>
 
 <script>
@@ -9,10 +9,13 @@ import LoginForm from "../components/LoginForm";
 
 export default defineComponent({
   components: { LoginForm },
+  props: {
+    setUser: Function,
+  },
   setup(props, context) {
     context.attrs;
     context.route;
-    return { context };
+    return { context, props };
   },
 });
 </script>
