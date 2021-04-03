@@ -3,6 +3,7 @@ import HomePage from "@/views/HomePage.vue";
 import LoginPage from "@/views/LoginPage";
 import RegisterPage from "@/views/RegisterPage";
 import QuotesPage from "@/views/QuotesPage";
+import SwansonsQPage from "@/views/SwansonsQPage";
 import NotFound from "@/components/NotFound";
 
 const routes = [
@@ -26,6 +27,11 @@ const routes = [
     path: "/quotes",
     name: "QuotesPage",
     component: QuotesPage,
+  },
+  {
+    path: "/swanson_quotes",
+    name: "SwansonsQPage",
+    component: SwansonsQPage,
   },
   {
     path: "/:catchAll(.*)",
