@@ -40,7 +40,7 @@
         <button class="button is-primary is-fullwidth">Submit</button>
       </fieldset>
     </form>
-    <button @click="goHome" class="button is-secondary">
+    <button @click.prevent="goHome" class="button is-secondary">
       Cancel
     </button>
   </div>
@@ -55,7 +55,6 @@ import router from "@/router";
 export default {
   props: {
     setUser: Function,
-    toggleNewPage: Function,
   },
   setup(props) {
     const user = reactive({
@@ -74,13 +73,8 @@ export default {
             }
           })
           .then(({ auth_token }) => setToken(auth_token))
-          .then(() => props.setUser())
-          .then(() => props.toggleNewPage())
-          .then(() => props)
-          .then(() => seeQuotes()),
-          (user.name = ""),
-          (user.email = ""),
-          (user.password = "");
+          .then(() => seeQuotes())
+          .then(() => props.setUser());
       } catch (err) {
         console.log(err);
       }
@@ -90,10 +84,10 @@ export default {
       router.push({ name: "QuotesPage" });
     };
 
-    function goHome() {
+    const goHome = () => {
       console.log("going home...");
       router.push({ name: "HomePage" });
-    }
+    };
 
     return { user, handleSubmit, goHome };
   },
