@@ -1,7 +1,11 @@
 <template>
   <router-link to="/">Home</router-link>
+
   <h1>The Great Michael Scott once said...</h1>
-  <div id="quote-container">
+  <h1 id="error" v-if="quotes.error === 'Invalid Request'">
+    LOGIN TO SEE QUOTES
+  </h1>
+  <div id="quote-container" v-if="quotes.error !== 'Invalid Request'">
     <div id="quoteDiv" v-for="quote in quotes" v-bind:key="quote.id">
       <p>{{ quote.quote }}</p>
       <button class="button is-danger" @click="deleteQuote(quote.id)">
@@ -84,5 +88,9 @@ export default {
   justify-content: space-around;
   align-items: center;
   height: 190px;
+}
+
+#error {
+  font-size: 80px;
 }
 </style>
