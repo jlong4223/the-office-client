@@ -1,4 +1,5 @@
 <template>
+  <router-link to="/">Home</router-link>
   <h1>COMING SOON - Swanson's quotes will be mapped here</h1>
 </template>
 
