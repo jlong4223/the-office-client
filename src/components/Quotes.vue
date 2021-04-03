@@ -1,4 +1,5 @@
 <template>
+  <router-link to="/">Home</router-link>
   <h1>The Great Michael Scott once said...</h1>
   <div id="quote-container">
     <div id="quoteDiv" v-for="quote in quotes" v-bind:key="quote.id">
