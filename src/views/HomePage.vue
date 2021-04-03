@@ -23,7 +23,7 @@
         >Home &nbsp;</router-link
       >
       <router-link to="" @click.prevent="handleLogout">| Logout | </router-link>
-      <router-link to="">&nbsp; Hi, {{ user.name }}</router-link>
+      <p>&nbsp; Hi, {{ user.name }}</p>
     </div>
   </div>
   <!-- THE BELOW WAS A TEST TOGGLE FORM TO PASS PROPS BEFORE -->
@@ -95,9 +95,5 @@ export default defineComponent({
 #navbar {
   display: flex;
   justify-content: center;
-}
-
-p:hover {
-  cursor: pointer;
 }
 </style>
