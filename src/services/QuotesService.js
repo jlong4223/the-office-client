@@ -10,10 +10,11 @@ export function fetchApiQuotes() {
 }
 
 export function deleteQuote(id) {
-  fetch(BASE_URL + `/${id}`, {
+  return fetch(BASE_URL + `/${id}`, {
     method: "DELETE",
     headers: {
-      "content-type": "application/json",
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
       Authorization: "Bearer " + getToken(),
     },
   });

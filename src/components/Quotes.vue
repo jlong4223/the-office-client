@@ -8,7 +8,7 @@
   <div id="quote-container" v-if="quotes.error !== 'Invalid Request'">
     <div id="quoteDiv" v-for="quote in quotes" v-bind:key="quote.id">
       <p>{{ quote.quote }}</p>
-      <button class="button is-danger" @click="deleteQuote(quote.id)">
+      <button class="button is-danger" @click="handleDelete(quote.id)">
         <i class="fas fa-trash-alt"></i>
       </button>
     </div>
@@ -17,15 +17,11 @@
 
 <script>
 import { onMounted, ref } from "vue";
-import { fetchApiQuotes } from "../services/QuotesService";
-import { getToken } from "../services/TokenService";
-// import { deleteQuote } from "../services/QuotesService";
+import { fetchApiQuotes, deleteQuote } from "../services/QuotesService";
 
 export default {
   name: "Quotes",
   setup() {
-    const BASE_URL = "http://localhost:3000/offices";
-
     /* allows for reactive data - if data here chages, so does the template */
     const quotes = ref([]);
 
@@ -40,30 +36,19 @@ export default {
       }
     }
 
-    /* ------ TODO move to services & add auth headers------- */
-    async function deleteQuote(id) {
-      await fetch(BASE_URL + `/${id}`, {
-        method: "DELETE",
-        headers: {
-          "content-type": "application/json",
-          Authorization: "Bearer " + getToken(),
-        },
-      });
-      fetchData();
+    async function handleDelete(quote) {
+      await deleteQuote(quote)
+        .then(() => {
+          fetchData();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-
-    // async function deleteTask() {
-    //   try {
-    //     await deleteQuote();
-    //     fetchData();
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // }
 
     onMounted(fetchData());
 
-    return { quotes, deleteQuote };
+    return { quotes, handleDelete };
   },
 };
 </script>
