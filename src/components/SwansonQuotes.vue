@@ -7,16 +7,19 @@
   <div id="quote-container" v-if="quotes.error !== 'Invalid Request'">
     <div id="quoteDiv" v-for="quote in quotes" v-bind:key="quote.id">
       <p>{{ quote.quote }}</p>
-      <!-- <button class="button is-danger" @click="deleteQuote(quote.id)">
+      <button class="button is-danger" @click="handleDelete(quote.id)">
         <i class="fas fa-trash-alt"></i>
-      </button> -->
+      </button>
     </div>
   </div>
 </template>
 
 <script>
 import { onMounted, ref } from "vue";
-import { fetchSwansonQuotes } from "../services/SwansonQService";
+import {
+  fetchSwansonQuotes,
+  deleteSwansonQuote,
+} from "../services/SwansonQService";
 
 export default {
   name: "SwansonQuotes",
@@ -32,9 +35,19 @@ export default {
       }
     }
 
+    async function handleDelete(quote) {
+      await deleteSwansonQuote(quote)
+        .then(() => {
+          fetchData();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
     onMounted(fetchData());
 
-    return { quotes };
+    return { quotes, handleDelete };
   },
 };
 </script>

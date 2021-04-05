@@ -7,3 +7,14 @@ export function fetchSwansonQuotes() {
     headers: { Authorization: "Bearer " + getToken() },
   });
 }
+
+export function deleteSwansonQuote(id) {
+  return fetch(BASE_URL + `/${id}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + getToken(),
+    },
+  });
+}
