@@ -73,16 +73,16 @@ export default {
             }
           })
           .then(({ auth_token }) => setToken(auth_token))
-          .then(() => seeQuotes())
+          .then(() => goHome())
           .then(() => props.setUser());
       } catch (err) {
         console.log(err);
       }
     }
 
-    const seeQuotes = () => {
-      router.push({ name: "QuotesPage" });
-    };
+    // const seeQuotes = () => {
+    //   router.push({ name: "QuotesPage" });
+    // };
 
     const goHome = () => {
       console.log("going home...");
