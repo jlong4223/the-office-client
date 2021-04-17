@@ -54,14 +54,24 @@
             </span>
           </div>
         </div>
-        <button class="button is-primary is-fullwidth">Submit</button>
+        <button
+          class="button is-primary is-fullwidth"
+          :disabled="user.email && user.password === ''"
+        >
+          Submit
+        </button>
       </fieldset>
     </form>
+    <button @click.prevent="goHome" class="button is-secondary">
+      Cancel
+    </button>
   </div>
 </template>
 
 <script>
 import { reactive } from "vue";
+import router from "@/router";
+
 export default {
   setup() {
     const BASE_URL = "http://localhost:3000/users";
@@ -86,18 +96,21 @@ export default {
 
     async function handleSubmit() {
       try {
-        await registerUser(user);
+        await registerUser(user).then(() => goHome());
         // TODO figure out how to push user home
-        alert("thanks for registering")(
-          (user.name = ""),
+        alert("thanks for registering")((user.name = "")),
           (user.email = ""),
-          (user.password = "")
-        );
+          (user.password = "");
       } catch (err) {
         console.log(err);
       }
     }
-    return { registerUser, handleSubmit, user };
+
+    const goHome = () => {
+      console.log("going home...");
+      router.push({ name: "HomePage" });
+    };
+    return { registerUser, handleSubmit, user, goHome };
   },
 };
 </script>
