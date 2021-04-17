@@ -37,7 +37,12 @@
             </span>
           </div>
         </div>
-        <button class="button is-primary is-fullwidth">Submit</button>
+        <button
+          class="button is-primary is-fullwidth"
+          :disabled="user.email && user.password === ''"
+        >
+          Submit
+        </button>
       </fieldset>
     </form>
     <button @click.prevent="goHome" class="button is-secondary">
