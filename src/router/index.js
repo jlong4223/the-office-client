@@ -7,17 +7,17 @@ import SwansonsQPage from "@/views/SwansonsQPage";
 import NotFound from "@/components/NotFound";
 import { getUserFromToken } from "../services/TokenService";
 
-// TODO figure out why this works within the route but not here
-// const checkAuth = (to, from, next) => {
-//   let token = getUserFromToken();
-//   if (token) {
-//     console.log("token-name: ", token);
-//     next();
-//   } else {
-//     next("/login");
-//     alert("Must be logged in to see Quotes");
-//   }
-// };
+const checkAuth = (to, from, next) => {
+  let token = getUserFromToken();
+  if (token) {
+    console.log("token-name: ", token);
+    next();
+  } else {
+    console.log("no-user");
+    alert("Must be logged in to see Quotes");
+    next("/login");
+  }
+};
 
 const routes = [
   {
@@ -40,33 +40,16 @@ const routes = [
     path: "/quotes",
     name: "QuotesPage",
     component: QuotesPage,
-    beforeEnter: (to, from, next) => {
-      let token = getUserFromToken();
-      if (token) {
-        console.log("token-name: ", token);
-        next();
-      } else {
-        next("/login");
-        alert("Must be logged in to see Quotes");
-      }
-    },
+    // Works p1: define checkAuth as the variable name only
+    beforeEnter: checkAuth,
   },
   {
     path: "/swanson_quotes",
     name: "SwansonsQPage",
     component: SwansonsQPage,
-    // beforeEnter: (to, from, next) => {
-    //   checkAuth(to, from, next);
-    // },
+    // Works p2: create a function and pass params down to checkAuth to use
     beforeEnter: (to, from, next) => {
-      let token = getUserFromToken();
-      if (token) {
-        console.log("token-name: ", token);
-        next();
-      } else {
-        next("/login");
-        alert("Must be logged in to see Quotes");
-      }
+      checkAuth(to, from, next);
     },
   },
   {
