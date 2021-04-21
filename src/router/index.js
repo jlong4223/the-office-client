@@ -5,15 +5,19 @@ import RegisterPage from "@/views/RegisterPage";
 import QuotesPage from "@/views/QuotesPage";
 import SwansonsQPage from "@/views/SwansonsQPage";
 import NotFound from "@/components/NotFound";
-// import { getUserFromToken } from "../services/TokenService";
+import { getUserFromToken } from "../services/TokenService";
 
-// TODO work on redirecting back home
-function checkAuth() {
-  let token = localStorage.getItem("auth_token");
-  if (token) {
-    console.log("token: ", token);
-  } else console.log("no user");
-}
+// TODO figure out why this works within the route but not here
+// const checkAuth = (to, from, next) => {
+//   let token = getUserFromToken();
+//   if (token) {
+//     console.log("token-name: ", token);
+//     next();
+//   } else {
+//     next("/login");
+//     alert("Must be logged in to see Quotes");
+//   }
+// };
 
 const routes = [
   {
@@ -36,18 +40,34 @@ const routes = [
     path: "/quotes",
     name: "QuotesPage",
     component: QuotesPage,
+    beforeEnter: (to, from, next) => {
+      let token = getUserFromToken();
+      if (token) {
+        console.log("token-name: ", token);
+        next();
+      } else {
+        next("/login");
+        alert("Must be logged in to see Quotes");
+      }
+    },
   },
   {
     path: "/swanson_quotes",
     name: "SwansonsQPage",
     component: SwansonsQPage,
-    beforeEnter: checkAuth(),
-    children: [
-      {
-        path: "/:pathMatch(.*)*",
-        redirect: "/",
-      },
-    ],
+    // beforeEnter: (to, from, next) => {
+    //   checkAuth(to, from, next);
+    // },
+    beforeEnter: (to, from, next) => {
+      let token = getUserFromToken();
+      if (token) {
+        console.log("token-name: ", token);
+        next();
+      } else {
+        next("/login");
+        alert("Must be logged in to see Quotes");
+      }
+    },
   },
   {
     path: "/:catchAll(.*)",
@@ -59,10 +79,5 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
-
-// router.beforeEach((to, from, next) => {
-//   console.log("page switch");
-//   next();
-// });
 
 export default router;
