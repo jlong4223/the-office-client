@@ -5,6 +5,15 @@ import RegisterPage from "@/views/RegisterPage";
 import QuotesPage from "@/views/QuotesPage";
 import SwansonsQPage from "@/views/SwansonsQPage";
 import NotFound from "@/components/NotFound";
+// import { getUserFromToken } from "../services/TokenService";
+
+// TODO work on redirecting back home
+function checkAuth() {
+  let token = localStorage.getItem("auth_token");
+  if (token) {
+    console.log("token: ", token);
+  } else console.log("no user");
+}
 
 const routes = [
   {
@@ -32,6 +41,13 @@ const routes = [
     path: "/swanson_quotes",
     name: "SwansonsQPage",
     component: SwansonsQPage,
+    beforeEnter: checkAuth(),
+    children: [
+      {
+        path: "/:pathMatch(.*)*",
+        redirect: "/",
+      },
+    ],
   },
   {
     path: "/:catchAll(.*)",
@@ -43,5 +59,10 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+// router.beforeEach((to, from, next) => {
+//   console.log("page switch");
+//   next();
+// });
 
 export default router;
