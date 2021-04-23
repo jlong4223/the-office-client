@@ -23,6 +23,7 @@
         >Home &nbsp;</router-link
       >
       <router-link to="" @click.prevent="handleLogout">| Logout | </router-link>
+      <router-link to="/favorites">&nbsp; Favorites |</router-link>
       <p>&nbsp; Hi, {{ user.name }}</p>
     </div>
   </div>
