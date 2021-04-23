@@ -25,4 +25,9 @@ function getUserFromToken() {
   return token ? JSON.parse(atob(token.split(".")[1])).name : null;
 }
 
-export { setToken, getToken, getUserFromToken, removeToken };
+function getUserId() {
+  const token = getToken();
+  return token ? JSON.parse(atob(token.split(".")[1])).user_id : null;
+}
+
+export { setToken, getToken, getUserFromToken, removeToken, getUserId };
