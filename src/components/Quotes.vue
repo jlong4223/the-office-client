@@ -96,7 +96,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 #quote-container {
   display: flex;
   flex-wrap: wrap;

@@ -94,10 +94,10 @@ export default {
       });
     }
 
+    // TODO figure out how to update alert if there is an err from - look at the quotes favIt func
     async function handleSubmit() {
       try {
         await registerUser(user).then(() => goHome());
-        // TODO figure out how to push user home
         alert("thanks for registering")((user.name = "")),
           (user.email = ""),
           (user.password = "");
