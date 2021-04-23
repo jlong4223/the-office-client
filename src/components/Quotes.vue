@@ -58,18 +58,24 @@ export default {
         });
     }
 
-    const favIt = (quote) => {
-      // console.log(quote.id, quote.quote, quote.author);
+    const favIt = async (quote) => {
       quote
-        ? // (favorite.id = quote.id),
-          ((favorite.quote = quote.quote), (favorite.author = quote.author))
+        ? ((favorite.quote = quote.quote), (favorite.author = quote.author))
         : null;
-      console.log("favs: ", favorite);
-      sendFav(favorite).then(() =>
-        alert(
-          `You've added the following quote: "${favorite.quote}" to your favorites.`
-        )
-      );
+      console.log("new fav added: ", favorite);
+      try {
+        await sendFav(favorite).then((res) => {
+          if (res.status === 422 || res.status === 500) {
+            console.log("err: ", res.status);
+            alert("You've already added this to your favorites :)");
+          } else {
+            console.log("no err, status: ", res.status);
+            alert("This has been added to your favorites :)");
+          }
+        });
+      } catch (err) {
+        console.log(err);
+      }
     };
 
     // TODO move this to a favoriteService file to be used in swansonsQuotes as well
