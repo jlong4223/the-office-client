@@ -12,8 +12,7 @@
         <button class="button is-danger" @click="handleDelete(quote.id)">
           <i class="fas fa-trash-alt"></i>
         </button>
-        <!-- TODO add an click function -->
-        <button class="button is-info" @click="favIt(quote)">
+        <button class="button is-info" @click.prevent="favIt(quote)">
           <i class="fas fa-bookmark"></i>
         </button>
       </div>
@@ -25,7 +24,7 @@
 import { reactive } from "vue";
 import { onMounted, ref } from "vue";
 import { fetchApiQuotes, deleteQuote } from "../services/QuotesService";
-
+import { getUserId } from "../services/TokenService";
 export default {
   name: "Quotes",
   setup() {
@@ -33,9 +32,9 @@ export default {
     const quotes = ref([]);
 
     const favorite = reactive({
-      // id: null,
       quote: "",
       author: "",
+      user_id: getUserId(),
     });
 
     // waiting for token to be sent to the backend
@@ -66,7 +65,23 @@ export default {
           ((favorite.quote = quote.quote), (favorite.author = quote.author))
         : null;
       console.log("favs: ", favorite);
+      sendFav(favorite).then(() =>
+        alert(
+          `You've added the following quote: "${favorite.quote}" to your favorites.`
+        )
+      );
     };
+
+    // TODO move this to a favoriteService file to be used in swansonsQuotes as well
+    function sendFav(favorite) {
+      return fetch("http://localhost:3000/favorites", {
+        method: "post",
+        headers: new Headers({
+          "Content-Type": "application/json",
+        }),
+        body: JSON.stringify({ favorite }),
+      });
+    }
 
     onMounted(fetchData());
 
