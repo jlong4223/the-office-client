@@ -87,7 +87,14 @@ export default defineComponent({
     };
 
     /* ------ returned functions for access outside of setup -----*/
-    return { handleLogout, user, setUser, toggleNewPage, page };
+    return {
+      handleLogout,
+      user,
+      setUser,
+      toggleNewPage,
+      page,
+      getUserFromToken,
+    };
   },
 });
 </script>
