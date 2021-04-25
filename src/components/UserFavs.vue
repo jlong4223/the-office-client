@@ -16,6 +16,16 @@
       </div>
     </div>
   </div>
+  <h1><strong>Favorite Ron Swanson Quotes:</strong></h1>
+  <div id="quote-container">
+    <div v-for="fa in fav.favorites" v-bind:key="fa.author">
+      <!-- only showing quotes here based on RSwanson -->
+      <div id="quoteDiv" v-if="fa.author === 'Ron Swanson'">
+        <h1>{{ fa.quote }}</h1>
+        <h2>{{ fa.author }}</h2>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
