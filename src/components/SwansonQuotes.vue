@@ -7,24 +7,37 @@
   <div id="quote-container" v-if="quotes.error !== 'Invalid Request'">
     <div id="quoteDiv" v-for="quote in quotes" v-bind:key="quote.id">
       <p>{{ quote.quote }}</p>
-      <button class="button is-danger" @click="handleDelete(quote.id)">
-        <i class="fas fa-trash-alt"></i>
-      </button>
+      <div id="btns">
+        <button class="button is-danger" @click="handleDelete(quote.id)">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+        <button class="button is-info" @click.prevent="favIt(quote)">
+          <i class="fas fa-bookmark"></i>
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, reactive } from "vue";
+import { getUserId } from "../services/TokenService";
 import {
   fetchSwansonQuotes,
   deleteSwansonQuote,
 } from "../services/SwansonQService";
+import { favTheQuote } from "../services/FavoritesService";
 
 export default {
   name: "SwansonQuotes",
   setup() {
     const quotes = ref([]);
+
+    const favorite = reactive({
+      quote: "",
+      author: "",
+      user_id: getUserId(),
+    });
 
     async function fetchData() {
       try {
@@ -45,9 +58,29 @@ export default {
         });
     }
 
+    const favIt = async (quote) => {
+      quote
+        ? ((favorite.quote = quote.quote), (favorite.author = quote.author))
+        : null;
+      console.log("new fav added: ", favorite);
+      try {
+        await favTheQuote(favorite).then((res) => {
+          if (res.status === 422 || res.status === 500) {
+            console.log("err: ", res.status);
+            alert("You've already added this to your favorites :)");
+          } else {
+            console.log("no err, status: ", res.status);
+            alert("This has been added to your favorites :)");
+          }
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     onMounted(fetchData());
 
-    return { quotes, handleDelete };
+    return { quotes, handleDelete, favIt };
   },
 };
 </script>
@@ -76,5 +109,12 @@ export default {
 
 #error {
   font-size: 80px;
+}
+
+#btns {
+  /* border: 1px solid red; */
+  width: 60%;
+  display: flex;
+  justify-content: space-around;
 }
 </style>
