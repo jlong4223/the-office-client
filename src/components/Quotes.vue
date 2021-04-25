@@ -21,10 +21,11 @@
 </template>
 
 <script>
-import { reactive } from "vue";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, reactive } from "vue";
 import { fetchApiQuotes, deleteQuote } from "../services/QuotesService";
+import { favTheQuote } from "../services/FavoritesService";
 import { getUserId } from "../services/TokenService";
+
 export default {
   name: "Quotes",
   setup() {
@@ -64,7 +65,7 @@ export default {
         : null;
       console.log("new fav added: ", favorite);
       try {
-        await sendFav(favorite).then((res) => {
+        await favTheQuote(favorite).then((res) => {
           if (res.status === 422 || res.status === 500) {
             console.log("err: ", res.status);
             alert("You've already added this to your favorites :)");
@@ -77,17 +78,6 @@ export default {
         console.log(err);
       }
     };
-
-    // TODO move this to a favoriteService file to be used in swansonsQuotes as well
-    function sendFav(favorite) {
-      return fetch("http://localhost:3000/favorites", {
-        method: "post",
-        headers: new Headers({
-          "Content-Type": "application/json",
-        }),
-        body: JSON.stringify({ favorite }),
-      });
-    }
 
     onMounted(fetchData());
 
