@@ -1,3 +1,4 @@
+import { getToken } from "./TokenService";
 const BASE_URL = "http://localhost:3000";
 
 export function favTheQuote(favorite) {
@@ -7,5 +8,16 @@ export function favTheQuote(favorite) {
       "Content-Type": "application/json",
     }),
     body: JSON.stringify({ favorite }),
+  });
+}
+
+export function deleteQuote(id) {
+  return fetch(BASE_URL + `/favorites/${id}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + getToken(),
+    },
   });
 }
