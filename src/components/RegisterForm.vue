@@ -1,6 +1,6 @@
 <template>
   <div id="form-holder">
-    <form @submit.prevent="handleSubmit">
+    <form @submit.prevent="handleSubmit(user)">
       <legend>Register</legend>
       <fieldset>
         <div class="field">
@@ -84,27 +84,34 @@ export default {
     });
 
     // TODO move below function to services
-    async function registerUser(user) {
-      await fetch(BASE_URL, {
+    function registerUser(user) {
+      return fetch(BASE_URL, {
         method: "post",
-        headers: {
+        headers: new Headers({
           "Content-Type": "application/json",
-        },
+        }),
         body: JSON.stringify({ user }),
       });
     }
 
-    // TODO figure out how to update alert if there is an err from - look at the quotes favIt func
-    async function handleSubmit() {
+    const handleSubmit = async (user) => {
+      console.log("user: ", user);
       try {
-        await registerUser(user).then(() => goHome());
-        alert("thanks for registering")((user.name = "")),
-          (user.email = ""),
-          (user.password = "");
+        await registerUser(user)
+          .then((res) => {
+            if (res.status === 422) {
+              console.log("err: ", res.status);
+              alert("Sorry, email is already in use...");
+            } else {
+              console.log("no err, status: ", res);
+              alert("thanks for registering");
+            }
+          })
+          .then(() => goHome());
       } catch (err) {
         console.log(err);
       }
-    }
+    };
 
     const goHome = () => {
       console.log("going home...");
