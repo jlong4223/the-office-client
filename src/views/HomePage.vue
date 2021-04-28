@@ -71,7 +71,7 @@ export default defineComponent({
 
     onMounted(setUser());
 
-    // TODO why does it go home and then back to page that I was on?
+    // BUG why does it go home and then back to page that I was on?
     function goHome() {
       console.log("going home...");
       router.replace({ name: "HomePage" });
