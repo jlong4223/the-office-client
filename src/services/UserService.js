@@ -13,6 +13,16 @@ function loginUser(user) {
   });
 }
 
+function registerUser(user) {
+  return fetch(BASE_URL, {
+    method: "post",
+    headers: new Headers({
+      "Content-Type": "application/json",
+    }),
+    body: JSON.stringify({ user }),
+  });
+}
+
 function logout() {
   return removeToken();
 }
@@ -21,6 +31,6 @@ function getUserFavorites() {
   return fetch(BASE_URL + `${getUserId()}`);
 }
 
-export { loginUser, logout, getUserFavorites };
+export { loginUser, logout, getUserFavorites, registerUser };
 
 // /users/${id} - pass in the getuserbyid from token service
