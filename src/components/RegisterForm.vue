@@ -71,10 +71,11 @@
 <script>
 import { reactive } from "vue";
 import router from "@/router";
+import { registerUser } from "../services/UserService";
 
 export default {
   setup() {
-    const BASE_URL = "http://localhost:3000/users";
+    // const BASE_URL = "http://localhost:3000/users";
 
     /* adds reactive for ability to change values in the template */
     const user = reactive({
@@ -84,15 +85,15 @@ export default {
     });
 
     // TODO move below function to services
-    function registerUser(user) {
-      return fetch(BASE_URL, {
-        method: "post",
-        headers: new Headers({
-          "Content-Type": "application/json",
-        }),
-        body: JSON.stringify({ user }),
-      });
-    }
+    // function registerUser(user) {
+    //   return fetch(BASE_URL, {
+    //     method: "post",
+    //     headers: new Headers({
+    //       "Content-Type": "application/json",
+    //     }),
+    //     body: JSON.stringify({ user }),
+    //   });
+    // }
 
     const handleSubmit = async (user) => {
       console.log("user: ", user);
