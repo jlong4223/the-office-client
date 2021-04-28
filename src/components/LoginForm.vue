@@ -59,7 +59,7 @@ import router from "@/router";
 
 export default {
   props: {
-    setUser: Function,
+    setUser: String,
   },
   setup(props) {
     const user = reactive({

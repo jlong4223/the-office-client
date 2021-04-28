@@ -10,7 +10,7 @@ import LoginForm from "../components/LoginForm";
 export default defineComponent({
   components: { LoginForm },
   props: {
-    setUser: Function,
+    setUser: String,
   },
   setup(props, context) {
     context.attrs;
