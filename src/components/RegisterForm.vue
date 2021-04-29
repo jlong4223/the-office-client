@@ -56,7 +56,7 @@
         </div>
         <button
           class="button is-primary is-fullwidth"
-          :disabled="user.email && user.password === ''"
+          :disabled="isBtnDisabled"
         >
           Submit
         </button>
@@ -71,6 +71,7 @@
 <script>
 import { reactive } from "vue";
 import router from "@/router";
+import useSubmitBtnState from "@/state/UserSubmitBtnState";
 import { registerUser } from "../services/UserService";
 
 export default {
@@ -105,7 +106,10 @@ export default {
       console.log("going home...");
       router.push({ name: "HomePage" });
     };
-    return { registerUser, handleSubmit, user, goHome };
+
+    const { isBtnDisabled } = useSubmitBtnState(user);
+
+    return { registerUser, handleSubmit, user, goHome, isBtnDisabled };
   },
 };
 </script>

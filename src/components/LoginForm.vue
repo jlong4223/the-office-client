@@ -39,7 +39,7 @@
         </div>
         <button
           class="button is-primary is-fullwidth"
-          :disabled="user.email && user.password === ''"
+          :disabled="isBtnDisabled"
         >
           Submit
         </button>
@@ -55,6 +55,7 @@
 import { reactive } from "vue";
 import { setToken } from "../services/TokenService";
 import { loginUser } from "../services/UserService";
+import useSubmitBtnState from "@/state/UserSubmitBtnState";
 import router from "@/router";
 
 export default {
@@ -66,6 +67,7 @@ export default {
       email: "",
       password: "",
     });
+
     async function handleSubmit() {
       try {
         await loginUser(user)
@@ -85,16 +87,14 @@ export default {
       }
     }
 
-    // const seeQuotes = () => {
-    //   router.push({ name: "QuotesPage" });
-    // };
-
     const goHome = () => {
       console.log("going home...");
       router.push({ name: "HomePage" });
     };
 
-    return { user, handleSubmit, goHome };
+    const { isBtnDisabled } = useSubmitBtnState(user);
+
+    return { user, handleSubmit, goHome, isBtnDisabled };
   },
 };
 </script>
