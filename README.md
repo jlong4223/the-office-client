@@ -16,3 +16,9 @@ A user can also add a quote to their favorites and view their favorite quotes.
 - Font Awesome
 - JsonWebToken
 - Express.js
+- Heroku
+
+### Deployed App
+[Click](https://office-client-vue.herokuapp.com/) to see the final app!
+
+<!-- TODO deploy rails app; if not deployed, will need to run rails api locally -->
