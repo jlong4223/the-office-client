@@ -33,7 +33,7 @@
   <!-- <LoginForm :setUser="setUser" :toggleNewPage="toggleNewPage" />
   </div> -->
   <div v-if="page.newPage === false">
-    <Landing />
+    <Landing :user="user" />
   </div>
 </template>
 
