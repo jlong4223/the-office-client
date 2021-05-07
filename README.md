@@ -15,3 +15,4 @@ A user can also add a quote to their favorites and view their favorite quotes.
 - Bulma (CSS framework)
 - Font Awesome
 - JsonWebToken
+- Express.js
