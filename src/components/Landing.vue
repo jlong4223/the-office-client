@@ -63,6 +63,9 @@ export default {
   font-size: 20px;
 }
 #scott {
-  height: 300px;
+  max-height: 300px;
+}
+#swanson{
+  max-height: 360px;
 }
 </style>
