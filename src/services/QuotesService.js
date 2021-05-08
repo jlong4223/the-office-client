@@ -1,6 +1,7 @@
 import { getToken } from "./TokenService";
 
-const BASE_URL = "http://localhost:3000";
+// const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://rails-office-api.herokuapp.com";
 
 /* ------ Sending the token with the req ------- */
 export function fetchApiQuotes() {

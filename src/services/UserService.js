@@ -1,7 +1,8 @@
 import { removeToken, getUserId } from "./TokenService";
 
 /* ------- User Services --------- */
-const BASE_URL = "http://localhost:3000/users/";
+// const BASE_URL = "http://localhost:3000/users/";
+const BASE_URL = "https://rails-office-api.herokuapp.com/users/";
 
 function loginUser(user) {
   return fetch(BASE_URL + "login", {

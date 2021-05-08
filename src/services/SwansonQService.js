@@ -1,6 +1,7 @@
 import { getToken } from "./TokenService";
 
-const BASE_URL = "http://localhost:3000/swansons";
+// const BASE_URL = "http://localhost:3000/swansons";
+const BASE_URL = "https://rails-office-api.herokuapp.com/swansons";
 
 export function fetchSwansonQuotes() {
   return fetch(BASE_URL, {
