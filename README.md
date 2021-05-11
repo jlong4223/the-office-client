@@ -21,4 +21,10 @@ A user can also add a quote to their favorites and view their favorite quotes.
 ### Deployed App
 [Click](https://office-client-vue.herokuapp.com/) to see the final app!
 
-<!-- TODO deploy rails app; if not deployed, will need to run rails api locally -->
+### Screenshots: 
+![homepage](./public/images/home.png)
+
+![quotes](./public/images/quotes.png)
+
+### Short clip:
+<img src="https://media.giphy.com/media/SJ07SEPlvAaqVvZf0Q/giphy.gif" alt="animated">
