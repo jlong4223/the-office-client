@@ -105,6 +105,7 @@ export default {
   justify-content: space-around;
   align-items: center;
   height: 190px;
+  background-color: #fff;
 }
 
 #error {

@@ -47,6 +47,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: whitesmoke;
 }
 .img-quote {
   display: flex;
@@ -57,7 +58,8 @@ export default {
   margin: 10px 0;
   border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  background-color: #fff;
 }
 .img-quote p {
   font-size: 20px;

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="homepage">
     <div id="navbar" v-if="user.name === null">
       <router-link to="/" @click.prevent="getUserFromToken"
         >Home &nbsp;</router-link
@@ -100,6 +100,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
+#homepage{
+  background-color: whitesmoke;
+}
 #navbar {
   display: flex;
   justify-content: center;
