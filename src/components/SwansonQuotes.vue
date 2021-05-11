@@ -4,6 +4,9 @@
   <h1 id="error" v-if="quotes.error === 'Invalid Request'">
     LOGIN TO SEE QUOTES
   </h1>
+  <div id="loaderSection" v-if="loading.status === true">
+    <div class="loader"></div>
+  </div>
   <div id="quote-container" v-if="quotes.error !== 'Invalid Request'">
     <div id="quoteDiv" v-for="quote in quotes" v-bind:key="quote.id">
       <p>{{ quote.quote }}</p>
@@ -32,6 +35,7 @@ export default {
   name: "SwansonQuotes",
   setup() {
     const quotes = ref([]);
+    const loading = ref({ status: true });
 
     const favorite = reactive({
       quote: "",
@@ -43,6 +47,7 @@ export default {
       try {
         const response = await fetchSwansonQuotes();
         quotes.value = await response.json();
+        loading.value.status = false;
       } catch (err) {
         console.log(err);
       }
@@ -80,7 +85,7 @@ export default {
 
     onMounted(fetchData());
 
-    return { quotes, handleDelete, favIt };
+    return { quotes, handleDelete, favIt, loading };
   },
 };
 </script>
