@@ -6,6 +6,9 @@
   <div v-if="fav.favorites && !fav.favorites.length">
     <h1>You havent added any favorites yet :(</h1>
   </div>
+  <div id="loaderSection" v-if="loading.status === true">
+    <div class="loader"></div>
+  </div>
   <div v-if="fav.favorites && fav.favorites.length !== 0">
     <h1><strong>Favorite Michael Scott Quotes:</strong></h1>
     <div id="quote-container">
@@ -46,11 +49,17 @@ import { deleteQuote } from "../services/FavoritesService";
 export default {
   setup() {
     const fav = ref([]);
+    const loading = ref({ status: true });
 
     // getting all user info based on user id
     async function getData() {
-      const data = await getUserFavorites();
-      fav.value = await data.json();
+      try {
+        const data = await getUserFavorites();
+        fav.value = await data.json();
+        loading.value.status = false;
+      } catch (e) {
+        console.log(e);
+      }
     }
 
     async function handleDelete(fa) {
@@ -65,7 +74,7 @@ export default {
 
     onMounted(getData());
 
-    return { fav, handleDelete };
+    return { fav, handleDelete, loading };
   },
 };
 </script>
