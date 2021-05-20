@@ -4,6 +4,7 @@ import LoginPage from "@/views/LoginPage";
 import RegisterPage from "@/views/RegisterPage";
 import QuotesPage from "@/views/QuotesPage";
 import SwansonsQPage from "@/views/SwansonsQPage";
+import ProfilePage from "@/views/ProfilePage";
 import UserFavs from "@/components/UserFavs";
 import NotFound from "@/components/NotFound";
 import { getUserFromToken } from "../services/TokenService";
@@ -57,6 +58,12 @@ const routes = [
     path: "/favorites",
     name: "UserFavs",
     component: UserFavs,
+    beforeEnter: checkAuth,
+  },
+  {
+    path: "/user/:id",
+    name: "ProfilePage",
+    component: ProfilePage,
     beforeEnter: checkAuth,
   },
   {
