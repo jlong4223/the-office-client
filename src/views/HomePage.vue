@@ -24,7 +24,9 @@
       >
       <router-link to="" @click.prevent="handleLogout">| Logout | </router-link>
       <router-link to="/favorites">&nbsp; Favorites |</router-link>
-      <p>&nbsp; Hi, {{ user.name.toUpperCase() }}</p>
+      <router-link :to="{ path: '/user/' + user.id }">
+        <p>&nbsp; Hi, {{ user.name.toUpperCase() }}</p>
+      </router-link>
     </div>
   </div>
   <!-- THE BELOW WAS A TEST TOGGLE FORM TO PASS PROPS BEFORE -->
@@ -44,7 +46,7 @@ import { onMounted, reactive } from "vue";
 import router from "@/router";
 /* -------- services ------ */
 import { logout } from "../services/UserService";
-import { getUserFromToken } from "../services/TokenService";
+import { getUserFromToken, getUserId } from "../services/TokenService";
 /* ----- Components/Pages ----*/
 // import LoginPage from "../views/LoginPage";
 // import LoginForm from "../components/LoginForm";
@@ -56,6 +58,7 @@ export default defineComponent({
     /*-------- navbar user functions -------*/
     const user = reactive({
       name: "",
+      id: getUserId(),
     });
 
     async function setUser() {
@@ -100,7 +103,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-#homepage{
+#homepage {
   background-color: whitesmoke;
 }
 #navbar {
