@@ -67,7 +67,7 @@ export default {
 #scott {
   max-height: 300px;
 }
-#swanson{
+#swanson {
   max-height: 360px;
 }
 </style>
