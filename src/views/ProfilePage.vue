@@ -1,10 +1,12 @@
 <template>
-  <!-- TODO move this to component and bring in the component instead -->
-  <h1>Profile page</h1>
+  <ProfileContent />
 </template>
 
 <script>
+import ProfileContent from "../components/ProfileContent";
+
 export default {
+  components: { ProfileContent },
   setup() {},
 };
 </script>
