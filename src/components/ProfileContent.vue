@@ -8,7 +8,7 @@
       <h3>{{ userName }}, here is your profile information:</h3>
       <!-- TODO add more user profile info and loading screen and/or materialUI skeleton -->
       <h4>You joined us on...</h4>
-      <h5>You have favorited {{ favAmount.length }} quotes</h5>
+      <h5>You have favorited {{ favAmount }} quotes</h5>
     </div>
   </div>
 </template>
@@ -27,7 +27,7 @@ export default {
         const data = await getUserFavorites();
         const userData = await data.json();
         console.log(userData);
-        favAmount.value = userData.favorites;
+        favAmount.value = userData.favorites.length;
         userName.value = userData.name;
         // loading.value.status = false;
       } catch (e) {
