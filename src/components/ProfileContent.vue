@@ -9,11 +9,11 @@
         alt="user"
         width="150"
       />
-      <form @submit.prevent="postUserPicData" enctype="multipart/form-data"> 
+      <form @submit.prevent="postUserPicData" enctype="multipart/form-data">
         <input type="file" v-on:change="updatePicInfoImage" />
-      <button class="button is-info" title="Disabled button">
-        Upload Profile Image
-      </button>
+        <button class="button is-info" title="Disabled button">
+          Upload Profile Image
+        </button>
       </form>
       <h3>Profile Image Upload coming soon</h3>
     </div>
@@ -29,7 +29,8 @@
 <script>
 import { getUserFavorites } from "../services/UserService";
 import { onMounted, ref, reactive } from "vue";
-import axios from 'axios'
+import axios from "axios";
+import Console from "Console";
 
 export default {
   setup() {
@@ -39,10 +40,10 @@ export default {
     const createdAt = ref();
 
     const picInfo = reactive({
-      userID: '',
-      application: 'office-client',
-      image: null
-    })
+      userID: "",
+      application: "office-client",
+      image: null,
+    });
 
     onMounted(getData());
 
@@ -55,43 +56,49 @@ export default {
         userName.value = userData.name;
         createdAt.value = new Date(userData.created_at);
         userInfo.value = userData;
-        picInfo.userID = userData.id
+        picInfo.userID = userData.id;
       } catch (e) {
         console.log(e);
       }
     }
 
-    const updatePicInfoImage = (event) => {
-      picInfo.image = event.target.files[0]
-    }
+    const updatePicInfoImage = (e) => {
+      picInfo.image = e.target.files[0];
+    };
 
-// TODO if they change their image, have a put request that goes through and changes their image instead of saving a new one
-// may need an function that gets the userid route from backend and if they exist, put instead of create
+    // TODO if they change their image, have a put request that goes through and changes their image instead of saving a new one
+    // may need an function that gets the userid route from backend and if they exist, put instead of create
     async function postUserPicData() {
-      const userPicData = new FormData()
+      const userPicData = new FormData();
       /* adding all elements from picInfo to the form data and posting it */
-      userPicData.append("image", picInfo.image)
-      userPicData.append("userID", picInfo.userID)
-      userPicData.append("application", picInfo.application)
-        try{
-          axios.post("http://localhost:3001/allapps", userPicData)
-        }catch(err){
-          console.log(err)
-        }
+      userPicData.append("image", picInfo.image);
+      userPicData.append("userID", picInfo.userID);
+      userPicData.append("application", picInfo.application);
+
+      try {
+        await axios
+          .post("http://localhost:3001/allapps", userPicData)
+          .then((res) =>
+            res.status === 200
+              ? Console.success("* * * image uploaded: ", res)
+              : Console.error("! ! ! image upload failure: ", res)
+          );
+      } catch (err) {
+        console.log(err);
       }
+    }
 
     // TODO have a function that gets the image and updates the picture
 
-
-    return { 
+    return {
       favAmount,
-      userName, 
-      userInfo, 
-      createdAt, 
-      picInfo, 
-      updatePicInfoImage, 
-      postUserPicData 
-      };
+      userName,
+      userInfo,
+      createdAt,
+      picInfo,
+      updatePicInfoImage,
+      postUserPicData,
+    };
   },
 };
 </script>
