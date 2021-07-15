@@ -24,28 +24,34 @@
       <h5>You have favorited {{ favAmount }} quotes</h5>
     </div>
   </div>
+  <!-- TODO show images here -->
 </template>
 
 <script>
-import { getUserFavorites } from "../services/UserService";
 import { onMounted, ref, reactive } from "vue";
+import { getUserFavorites } from "../services/UserService";
+import { getUserId } from "../services/TokenService";
 import axios from "axios";
 import Console from "Console";
+import map from "lodash/map";
 
 export default {
   setup() {
+    onMounted(getData(), getUserPicData());
+
+    /* ----- All "State" Data ----- */
     const userInfo = ref({});
     const favAmount = ref([]);
     const userName = ref();
     const createdAt = ref();
-
+    const allPicData = ref();
+    const pictureUrls = ref();
     const picInfo = reactive({
       userID: "",
       application: "office-client",
       image: null,
+      isProfilePic: false,
     });
-
-    onMounted(getData());
 
     async function getData() {
       try {
@@ -66,21 +72,20 @@ export default {
       picInfo.image = e.target.files[0];
     };
 
-    // TODO if they change their image, have a put request that goes through and changes their image instead of saving a new one
-    // may need an function that gets the userid route from backend and if they exist, put instead of create
     async function postUserPicData() {
       const userPicData = new FormData();
       /* adding all elements from picInfo to the form data and posting it */
       userPicData.append("image", picInfo.image);
       userPicData.append("userID", picInfo.userID);
       userPicData.append("application", picInfo.application);
+      userPicData.append("isProfilePic", picInfo.isProfilePic);
 
       try {
         await axios
           .post("http://localhost:3001/allapps", userPicData)
           .then((res) =>
             res.status === 200
-              ? Console.success("* * * image uploaded: ", res)
+              ? Console.success("* * * image uploaded: ", res.status)
               : Console.error("! ! ! image upload failure: ", res)
           );
       } catch (err) {
@@ -88,7 +93,21 @@ export default {
       }
     }
 
-    // TODO have a function that gets the image and updates the picture
+    async function getUserPicData() {
+      // this is grabbing users data and saving pic urls and the objects to diff refs
+      const data = await axios
+        .get(`http://localhost:3001/allapps/office-client/${getUserId()}`)
+        .then((pic) => pic.data);
+
+      const getPicUrls = map(data, (each) =>
+        map(each.picture, (item) => item.image)
+      );
+
+      allPicData.value = data[0].picture;
+      pictureUrls.value = getPicUrls;
+    }
+
+    // TODO have a function that has a patch req to update pic with being a profile pic to true
 
     return {
       favAmount,
@@ -98,6 +117,8 @@ export default {
       picInfo,
       updatePicInfoImage,
       postUserPicData,
+      pictureUrls,
+      allPicData,
     };
   },
 };
