@@ -9,6 +9,7 @@ A user can also add a quote to their favorites and view their favorite quotes.
 - Vue3
 - Ruby on Rails API
 - Vue Composition API
+- Node.js/Express.js Cloudinary API
 - Vue3-Router
 - Yarn
 - Git
@@ -17,6 +18,8 @@ A user can also add a quote to their favorites and view their favorite quotes.
 - JsonWebToken
 - Express.js
 - Heroku
+- Axios
+- Lodash
 
 ### Deployed App
 [Click](https://office-client-vue.herokuapp.com/) to see the final app!
